@@ -145,6 +145,7 @@ form.step2 .s1{display:none}form.step2 .s2{display:grid}
 .sl li b{font:600 .85rem var(--fd);color:var(--gold-l);padding-top:4px}
 .sl li strong{display:block;font-weight:600;font-size:1.05rem}
 .sl li span{font-size:.9rem;color:#b9c6d8}
+.sl.static li{opacity:1}
 .sl li.on{opacity:1;background:rgba(240,162,27,.14);border-color:var(--saf);transform:translateX(8px)}
 #ssvg{width:100%;height:auto;border-radius:20px;filter:drop-shadow(0 30px 50px rgba(0,0,0,.5))}
 
@@ -288,7 +289,26 @@ footer h3{color:#fff;font-size:1.8rem;margin-bottom:26px}
 .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+/* ---- CSS-only motion: works even when JavaScript is blocked ---- */
+@keyframes fadeUp{from{opacity:0;transform:translateY(34px)}}
+@keyframes cardIn{from{opacity:0;transform:translateX(70px) rotateY(-12deg)}}
+@keyframes sunrise{from{opacity:0;transform:translateX(-50%) translateY(38%)}}
+@keyframes rise{from{opacity:0;transform:translateY(46px)}}
+.hero-copy>.badge{animation:fadeUp .8s .1s backwards cubic-bezier(.2,.8,.2,1)}
+html:not(.g) #h1{animation:fadeUp 1s .25s backwards cubic-bezier(.2,.8,.2,1)}
+.hero-copy>.lead{animation:fadeUp .9s .55s backwards cubic-bezier(.2,.8,.2,1)}
+.hero-copy>.chips{animation:fadeUp .9s .75s backwards cubic-bezier(.2,.8,.2,1)}
+.hero-copy>.cta-row{animation:fadeUp .9s .95s backwards cubic-bezier(.2,.8,.2,1)}
+.hero-copy>.ticks{animation:fadeUp .9s 1.15s backwards cubic-bezier(.2,.8,.2,1)}
+.hero .card{animation:cardIn 1.2s .5s backwards cubic-bezier(.2,.8,.2,1)}
+.proof .wrap{animation:fadeUp 1s 1s backwards cubic-bezier(.2,.8,.2,1)}
+.sun{animation:sunrise 2.8s backwards ease-out}
+.land .l1{animation:rise 1.8s .1s backwards ease-out}.land .l2{animation:rise 1.8s .3s backwards ease-out}.land .l3{animation:rise 1.8s .5s backwards ease-out}
+@supports (animation-timeline:view()){
+  html:not(.g) :is(.proj,.wy,.pc,.offer,.calc-box,.sec-head,.invest .wrap>div,details,.map-box>*,.contact .wrap>*,.scroll,.fgrid>*){animation:fadeUp linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
+}
+/* reduced-motion: soften, do not remove everything */
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.seal,.stars,.sun{animation-duration:12s}.coin{animation-duration:18s}.bt{transform:none!important}}
 </style>
 </head>
 <body>
@@ -368,7 +388,7 @@ html.lenis,html.lenis body{height:auto}
       </div>
       <div class="ticks"><span><svg class="ic"><use href="#i-check"/></svg>DTCP / TNRERA</span><span><svg class="ic"><use href="#i-check"/></svg>Easy EMI</span><span><svg class="ic"><use href="#i-check"/></svg>Bank loan help</span><span><svg class="ic"><use href="#i-check"/></svg>Immediate registration</span></div>
     </div>
-    <div class="card" data-form="hero"></div>
+    <div class="card" data-form="hero"><noscript><h3>Book a Free Site Visit</h3><p class="sub">Call or WhatsApp our team for the price list.</p><div class="cta-row"><a class="btn btn-primary" href="tel:+918940375757">Call +91 89403 75757</a><a class="btn btn-wa" href="https://wa.me/918940375757">WhatsApp Us</a></div></noscript></div>
   </div>
 </section>
 
@@ -562,7 +582,7 @@ html.lenis,html.lenis body{height:auto}
     <div class="timer" id="timer" aria-label="Offer countdown"><div><b>00</b><small>Days</small></div><div><b>00</b><small>Hrs</small></div><div><b>00</b><small>Min</small></div><div><b>00</b><small>Sec</small></div></div>
     <p class="fine" style="margin-top:10px">Launch offer window</p>
   </div>
-  <div class="card" data-form="main"></div>
+  <div class="card" data-form="main"><noscript><h3>Book a Free Site Visit</h3><p class="sub">Call or WhatsApp our team for the price list.</p><div class="cta-row"><a class="btn btn-primary" href="tel:+918940375757">Call +91 89403 75757</a><a class="btn btn-wa" href="https://wa.me/918940375757">WhatsApp Us</a></div></noscript></div>
 </div></section>
 </main>
 
@@ -602,7 +622,8 @@ const CONFIG = {
   offerDeadline: ""                 // ISO date e.g. "2026-12-31T23:59:59+05:30"; empty = rolling 3-day window
 };
 const REDUCED=matchMedia("(prefers-reduced-motion:reduce)").matches;
-const NOGSAP=!window.gsap||REDUCED;
+const NOGSAP=!window.gsap;
+const CALM=REDUCED; // reduced-motion: keep fades & reveals, drop parallax / pinning / smooth-scroll
 const $=(q,c)=>[...(c||document).querySelectorAll(q)];
 
 /* ---- tracking loaders (only if IDs set) ---- */
@@ -662,7 +683,7 @@ const FORM=`
 </form>`;
 const FT={hero:["Get Price List & Free Site Visit","Takes 10 seconds. Our team calls you back."],main:["Book Your Free Site Visit","Free pick-up options available. Ask our team."]};
 $("[data-form]").forEach(c=>{const t=FT[c.dataset.form];c.innerHTML="<h3>"+t[0]+"</h3><p class=\"sub\">"+t[1]+"</p>"+FORM});
-function confetti(){if(REDUCED)return;const cols=["#f0a21b","#ecd28b","#1f9d63","#fff","#25d366"];
+function confetti(){const cols=["#f0a21b","#ecd28b","#1f9d63","#fff","#25d366"];
   for(let i=0;i<42;i++){const e=document.createElement("i");e.className="confetti";e.style.left=Math.random()*100+"vw";e.style.background=cols[i%5];e.style.animationDelay=Math.random()*.5+"s";e.style.animationDuration=1.4+Math.random()+"s";document.body.appendChild(e);setTimeout(()=>e.remove(),3200)}}
 const postLead=async d=>{if(CONFIG.leadEndpoint)await fetch(CONFIG.leadEndpoint,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(d)})};
 $(".lead-form").forEach(f=>{
@@ -741,10 +762,12 @@ const tb=$("#timer b");
 (function(){
   if(NOGSAP)return;
   gsap.registerPlugin(ScrollTrigger);
+  document.documentElement.classList.add("g");
+  const calm=CALM;
   const fine=matchMedia("(hover:hover) and (pointer:fine)").matches;
 
   /* smooth scroll (desktop) */
-  if(fine&&window.Lenis){
+  if(fine&&!calm&&window.Lenis){
     const lenis=new Lenis({lerp:.09});
     lenis.on("scroll",ScrollTrigger.update);
     gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);
@@ -770,33 +793,25 @@ const tb=$("#timer b");
 
   /* ---- HERO intro ---- */
   const words=split(document.getElementById("h1"));
-  const tl=gsap.timeline({defaults:{ease:"power4.out"}});
-  tl.from(".hero .badge",{y:24,opacity:0,duration:.7})
-    .from(words,{yPercent:115,rotate:5,duration:1.1,stagger:.07},"-=.4")
-    .from(".hero p.lead",{y:30,opacity:0,duration:.8},"-=.7")
-    .from(".chip",{y:36,opacity:0,scale:.92,duration:.8,stagger:.12,ease:"back.out(1.6)"},"-=.5")
-    .from(".cta-row",{y:30,opacity:0,duration:.8},"-=.5")
-    .from(".ticks span",{y:14,opacity:0,duration:.5,stagger:.07},"-=.3")
-    .from(".hero .card",{x:80,opacity:0,rotateY:-14,duration:1.2,transformPerspective:900},.5)
-    .from(".proof .wrap",{y:60,opacity:0,duration:1},.9);
-  gsap.from(".sun",{yPercent:35,opacity:0,duration:2.4,ease:"power3.out"});
-  gsap.from(".land .l1",{yPercent:12,duration:1.8,ease:"power3.out"});gsap.from(".land .l2",{yPercent:18,duration:1.8,ease:"power3.out"});gsap.from(".land .l3",{yPercent:28,duration:1.8,ease:"power3.out"});
-  gsap.to(".hero .card",{y:-8,duration:3.2,ease:"sine.inOut",yoyo:true,repeat:-1,delay:2});
+  gsap.from(words,{yPercent:115,rotate:5,duration:1.1,stagger:.07,delay:.35,ease:"power4.out"});
+  if(!calm)gsap.to(".hero .card",{y:-8,duration:3.2,ease:"sine.inOut",yoyo:true,repeat:-1,delay:2});
 
   /* hero scroll parallax: layers separate, sun sinks */
+  if(!calm){
   const hs={trigger:".hero",start:"top top",end:"bottom top",scrub:true};
   gsap.to(".land .l1",{yPercent:-10,ease:"none",scrollTrigger:hs});
   gsap.to(".land .l2",{yPercent:-4,ease:"none",scrollTrigger:hs});
   gsap.to(".land .l3",{yPercent:10,ease:"none",scrollTrigger:hs});
   gsap.to(".sun",{yPercent:30,scale:1.15,ease:"none",scrollTrigger:hs});
   gsap.to(".hero-copy",{y:-50,opacity:.15,ease:"none",scrollTrigger:{trigger:".hero",start:"55% top",end:"bottom top",scrub:true}});
+  }
 
   /* rolling hero prices */
   $("[data-roll]").forEach(b=>{const m=b.textContent.match(/([\d.]+)/);if(!m)return;const v=parseFloat(m[1]),pre=b.textContent.slice(0,m.index),post=b.textContent.slice(m.index+m[1].length),o={n:0};
     gsap.to(o,{n:v,duration:2.2,delay:1.1,ease:"power3.out",onUpdate:()=>b.textContent=pre+o.n.toFixed(2)+post})});
 
   /* particles (gold dust) */
-  (function(){
+  if(!calm)(function(){
     const cv=document.getElementById("parts"),ctx=cv.getContext("2d");let W,H,P=[];
     const size=()=>{const r=cv.getBoundingClientRect();W=cv.width=r.width;H=cv.height=r.height};size();addEventListener("resize",size);
     const n=matchMedia("(max-width:700px)").matches?22:46;
@@ -808,7 +823,7 @@ const tb=$("#timer b");
   })();
 
   /* desktop-only: cursor glow, magnetic CTAs, 3D tilt */
-  if(fine){
+  if(fine&&!calm){
     const hero=document.querySelector(".hero"),g=document.createElement("div");g.className="glow";hero.querySelector(".scene").appendChild(g);
     const gx=gsap.quickTo(g,"x",{duration:.8}),gy=gsap.quickTo(g,"y",{duration:.8});
     const lx=gsap.quickTo(".land","x",{duration:1.2,ease:"power3"}),sx=gsap.quickTo(".sun","x",{duration:1.4,ease:"power3"});
@@ -827,12 +842,13 @@ const tb=$("#timer b");
   }
 
   /* ---- pinned scroll-built layout ---- */
+  const lis=$("#sl li");
+  if(!calm){
   gsap.set("#sBound,#sRoads path",{strokeDasharray:1,strokeDashoffset:1});
   gsap.set("#sLand,#sDash",{opacity:0});
   gsap.set(".pl",{scale:0,opacity:0,transformOrigin:"50% 50%"});
   gsap.set("#sPark",{opacity:0,y:20});gsap.set("#sGate",{opacity:0,y:30});
   gsap.set("#sPins g",{scale:0,transformOrigin:"50% 50%"});
-  const lis=$("#sl li");
   const st=gsap.timeline({defaults:{ease:"power2.inOut"},scrollTrigger:{
     trigger:".story-pin",start:"top top",end:"+="+Math.round(innerHeight*3.4),pin:true,scrub:.6,anticipatePin:1,
     onUpdate:self=>{const i=Math.min(4,Math.floor(self.progress*5));lis.forEach((l,k)=>l.classList.toggle("on",k===i))}}});
@@ -846,6 +862,7 @@ const tb=$("#timer b");
     .to("#sPins g",{scale:1,duration:.5,stagger:.12,ease:"back.out(3)"})
     .to("#ssvg",{scale:1.04,duration:.6},"<");
   lis[0].classList.add("on");
+  }else{document.getElementById("sl").classList.add("static")}
 
   /* ---- section reveals ---- */
   const rv=(sel,vars,trig,start)=>gsap.from(sel,Object.assign({opacity:0,duration:.9,ease:"power3.out",scrollTrigger:{trigger:trig||sel,start:start||"top 88%"}},vars));
@@ -854,13 +871,13 @@ const tb=$("#timer b");
   $(".proj").forEach(p=>{
     const frame=p.querySelector(".frame"),img=p.querySelector("img");
     gsap.from(frame,{clipPath:"inset(0 0 100% 0)",duration:1.3,ease:"power4.inOut",scrollTrigger:{trigger:p,start:"top 78%"}});
-    gsap.fromTo(img,{yPercent:-6},{yPercent:6,ease:"none",scrollTrigger:{trigger:p,start:"top bottom",end:"bottom top",scrub:true}});
+    if(!calm)gsap.fromTo(img,{yPercent:-6},{yPercent:6,ease:"none",scrollTrigger:{trigger:p,start:"top bottom",end:"bottom top",scrub:true}});
     gsap.from(p.querySelector(".seal"),{scale:0,rotate:-60,duration:1,ease:"back.out(2)",scrollTrigger:{trigger:p,start:"top 70%"}});
     gsap.from(p.querySelectorAll(".pbody > *"),{y:34,opacity:0,stagger:.1,duration:.8,ease:"power3.out",scrollTrigger:{trigger:p.querySelector(".pbody"),start:"top 82%"}});
     gsap.from(p.querySelectorAll(".amen-list span"),{y:16,opacity:0,scale:.9,stagger:.06,duration:.5,ease:"back.out(1.6)",scrollTrigger:{trigger:p.querySelector(".amen-list"),start:"top 90%"}});
   });
-  gsap.fromTo(".bt.r1",{xPercent:0},{xPercent:-45,ease:"none",scrollTrigger:{trigger:".bigtext",start:"top bottom",end:"bottom top",scrub:.5}});
-  gsap.fromTo(".bt.r2",{xPercent:-45},{xPercent:0,ease:"none",scrollTrigger:{trigger:".bigtext",start:"top bottom",end:"bottom top",scrub:.5}});
+  if(!calm){gsap.fromTo(".bt.r1",{xPercent:0},{xPercent:-45,ease:"none",scrollTrigger:{trigger:".bigtext",start:"top bottom",end:"bottom top",scrub:.5}});
+  gsap.fromTo(".bt.r2",{xPercent:-45},{xPercent:0,ease:"none",scrollTrigger:{trigger:".bigtext",start:"top bottom",end:"bottom top",scrub:.5}});}
   gsap.from(".wy",{y:46,opacity:0,scale:.92,duration:.7,stagger:.07,ease:"back.out(1.5)",scrollTrigger:{trigger:".why-grid",start:"top 85%"}});
   gsap.from("tr",{x:-40,opacity:0,stagger:.1,duration:.7,ease:"power3.out",scrollTrigger:{trigger:"table",start:"top 85%"}});
   gsap.from(".calc-box",{y:70,opacity:0,scale:.96,duration:1,ease:"power4.out",scrollTrigger:{trigger:".calc-box",start:"top 88%"}});
@@ -875,7 +892,7 @@ const tb=$("#timer b");
     gsap.to(o,{v:n,duration:2,ease:"power2.out",scrollTrigger:{trigger:el,start:"top 95%",once:true},onUpdate:()=>el.textContent=Math.round(o.v).toLocaleString("en-IN")+(o.v>=n?s:"")})});
 
   /* dark sections grow from a rounded card to full bleed */
-  $(".pay,.invest").forEach(sec=>gsap.fromTo(sec,{clipPath:"inset(6% 4% 6% 4% round 44px)"},{clipPath:"inset(0% 0% 0% 0% round 0px)",ease:"none",scrollTrigger:{trigger:sec,start:"top bottom",end:"top 30%",scrub:true}}));
+  if(!calm)$(".pay,.invest").forEach(sec=>gsap.fromTo(sec,{clipPath:"inset(6% 4% 6% 4% round 44px)"},{clipPath:"inset(0% 0% 0% 0% round 0px)",ease:"none",scrollTrigger:{trigger:sec,start:"top bottom",end:"top 30%",scrub:true}}));
 
   /* calculator: punch the numbers */
   $("#cSize,#cDown,#cProj button,#cMonths button").forEach(el=>el.addEventListener(el.tagName==="INPUT"?"input":"click",()=>{
