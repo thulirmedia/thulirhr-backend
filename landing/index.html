@@ -207,6 +207,54 @@ footer .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
 .toast.on{transform:none;opacity:1}
 @media(min-width:900px){.toast{bottom:22px}}
 
+
+/* hero visual */
+.hero-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.35}
+.aerial{position:absolute;right:-6%;bottom:-4%;width:min(760px,70%);opacity:.5;pointer-events:none;transform:perspective(900px) rotateX(48deg) rotateZ(-12deg);filter:drop-shadow(0 30px 40px rgba(0,0,0,.5))}
+@media(max-width:900px){.aerial{width:120%;right:-30%;opacity:.28;bottom:auto;top:8%}}
+.aerial .road{fill:#2b3a4d}
+.aerial .plot{fill:#2f8f55;opacity:0;animation:plotIn .7s forwards}
+.aerial .plot.sold{fill:#c0462f}
+.aerial .plot.hot{fill:#f2b632;animation:plotIn .7s forwards,glow 2.2s 3s infinite}
+@keyframes plotIn{to{opacity:.92}}
+@keyframes glow{50%{opacity:.4}}
+.aerial .gate{fill:#fff}
+.hero-grid{z-index:1}
+
+/* two-step form */
+.steps{display:flex;gap:6px;margin-bottom:14px}
+.steps i{flex:1;height:5px;border-radius:9px;background:var(--line);transition:background .4s}
+.steps i.on{background:var(--cta)}
+.s2{display:none}
+form.step2 .s1{display:none}
+form.step2 .s2{display:grid;gap:11px}
+.done{display:none;text-align:center;padding:10px 0}
+.done b{display:block;font-size:1.15rem;color:var(--ok)}
+.perks{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.78rem;font-weight:700;color:var(--navy);margin-top:12px}
+.perks span::before{content:"✓ ";color:var(--ok)}
+.confetti{position:fixed;top:-10px;z-index:99;width:9px;height:14px;pointer-events:none;animation:fall 1.8s linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.9}}
+
+/* calculator */
+.calc{background:linear-gradient(180deg,var(--paper),var(--cream))}
+.calc-box{display:grid;grid-template-columns:1.1fr .9fr;gap:0;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(15,39,66,.45);border:1px solid var(--line)}
+@media(max-width:860px){.calc-box{grid-template-columns:1fr}}
+.calc-in{padding:28px;display:grid;gap:20px}
+.calc-in label{display:grid;gap:8px;font-weight:700;font-size:.92rem;color:var(--navy)}
+.seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:8px}
+.seg button{font:700 .92rem Manrope,sans-serif;padding:12px 10px;border-radius:12px;border:1.5px solid var(--line);background:#fff;color:var(--navy);cursor:pointer;transition:.2s}
+.seg button small{display:block;font-weight:600;color:var(--muted);font-size:.72rem}
+.seg button.on{border-color:var(--cta);background:#fff3ea;box-shadow:0 0 0 3px rgba(255,106,26,.15)}
+input[type=range]{padding:0;border:0;accent-color:var(--cta);height:28px;background:none}
+.calc-out{background:linear-gradient(150deg,var(--navy),var(--navy-2));color:#fff;padding:28px;display:flex;flex-direction:column;gap:14px;justify-content:center}
+.calc-out small{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:#b8c8dc;font-weight:700}
+.calc-out .big{font-size:clamp(2rem,5vw,2.8rem);font-weight:800;color:var(--gold);line-height:1}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.split div{background:rgba(255,255,255,.09);border-radius:12px;padding:14px}
+.split b{font-size:1.25rem;display:block}
+.split .em{color:var(--gold)}
+.calc-out .fine{color:#9fb3cb}
+
 /* reveal */
 .rv{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}
 .rv.in{opacity:1;transform:none}
@@ -220,14 +268,16 @@ footer .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
 <header>
   <div class="wrap nav">
     <a href="#top"><img src="img/logo.png" alt="Mother India City Shelters"></a>
-    <nav class="nav-links"><a href="#projects">Properties</a><a href="#why">Why Us</a><a href="#location">Location</a><a href="#faq">FAQ</a></nav>
+    <nav class="nav-links"><a href="#projects">Properties</a><a href="#calculator">Price Calculator</a><a href="#why">Why Us</a><a href="#location">Location</a><a href="#faq">FAQ</a></nav>
     <a class="btn btn-cta" href="#enquire" data-track="nav_cta">Book a Site Visit</a>
   </div>
 </header>
 
 <main id="top">
 <section class="hero" style="padding-top:48px">
+  <video class="hero-vid" autoplay muted loop playsinline preload="none" aria-hidden="true"><source src="img/hero.mp4" type="video/mp4"></video>
   <div class="plots" aria-hidden="true"></div>
+  <svg class="aerial" viewBox="0 0 600 420" aria-hidden="true" id="aerial"></svg>
   <div class="wrap hero-grid">
     <div>
       <span class="badge"><i></i> TRUSTED LAND PROMOTERS SINCE 1997</span>
@@ -244,19 +294,7 @@ footer .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
       <div class="checks"><span>DTCP / TNRERA</span><span>Easy EMI</span><span>Bank loan help</span><span>Immediate registration</span></div>
     </div>
     <div class="card" id="enquire-top">
-      <h3>Get Price List &amp; Free Site Visit</h3>
-      <p class="sub">Fill in 30 seconds. Our team calls you back.</p>
-      <form class="lead-form" novalidate>
-        <input class="hp" name="company" tabindex="-1" autocomplete="off">
-        <div class="row">
-          <input name="name" placeholder="Full name" required autocomplete="name">
-          <input name="phone" type="tel" inputmode="numeric" placeholder="Phone number" required autocomplete="tel" pattern="[0-9+ ]{10,14}">
-        </div>
-        <select name="project"><option>Mangalyan Avenue, Sulur</option><option>Maharani Town, Pollachi</option><option>Both / Not sure</option></select>
-        <button class="btn btn-cta" type="submit">Request a Call Back →</button>
-        <p class="msg">✓ Thank you! We'll call you shortly.</p>
-        <p class="fine">🔒 No spam. By submitting you agree to be contacted about Mangalyan Avenue or Maharani Town.</p>
-      </form>
+      <div data-form="hero"></div>
     </div>
   </div>
 </section>
@@ -333,6 +371,31 @@ footer .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
   </div>
 </div></section>
 
+<section class="calc" id="calculator"><div class="wrap">
+  <div class="sec-head rv"><div><span class="eyebrow">Plan your plot</span><h2>Check Your Plot Cost &amp; EMI</h2></div>
+  <p>Move the sliders to see an indicative budget. Our team confirms the final price on a call.</p></div>
+  <div class="calc-box rv">
+    <div class="calc-in">
+      <label>Project
+        <div class="seg" id="cProj"><button type="button" class="on" data-v="mangalyan">Mangalyan Avenue<small>₹5.69 L/cent · Sulur</small></button><button type="button" data-v="maharani">Maharani Town<small>₹2.29 L/cent · Pollachi</small></button></div>
+      </label>
+      <label>Plot size: <b id="cSizeV"></b>
+        <input type="range" id="cSize" min="1000" max="3000" step="50" value="1000"></label>
+      <label>Down payment: <b id="cDownV"></b>
+        <input type="range" id="cDown" min="100000" max="1000000" step="50000" value="100000"></label>
+      <label>Pay balance in
+        <div class="seg" id="cMonths"><button type="button" class="on" data-v="3">3 months</button><button type="button" data-v="6">6 months</button></div>
+      </label>
+    </div>
+    <div class="calc-out">
+      <small>Approx. plot cost</small><div class="big" id="cTotal">–</div>
+      <div class="split"><div><small>Down payment</small><b id="cDownO">–</b></div><div><small>Monthly EMI</small><b id="cEmi" class="em">–</b></div></div>
+      <p class="fine" id="cNote"></p>
+      <a class="btn btn-cta" id="cCta" href="#" target="_blank" rel="noopener" data-track="calc_quote">Get Exact Quote on WhatsApp →</a>
+    </div>
+  </div>
+</div></section>
+
 <section class="pay"><div class="wrap">
   <div class="rv"><span class="eyebrow" style="color:var(--gold)">Easy ownership</span><h2>Flexible Payment Plans</h2></div>
   <div class="pay-grid">
@@ -386,19 +449,7 @@ footer .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
     <p class="fine" style="margin-top:8px">Launch offer window</p>
   </div>
   <div class="card rv">
-    <h3>Book Your Free Site Visit</h3><p class="sub">Free pick-up options available. Ask our team.</p>
-    <form class="lead-form" novalidate>
-      <input class="hp" name="company" tabindex="-1" autocomplete="off">
-      <div class="row"><input name="name" placeholder="Full name" required autocomplete="name"><input name="phone" type="tel" inputmode="numeric" placeholder="Phone number" required autocomplete="tel"></div>
-      <div class="row"><input name="email" type="email" placeholder="Email (optional)" autocomplete="email"><input name="city" placeholder="City" autocomplete="address-level2"></div>
-      <div class="row">
-        <select name="project" id="projSel"><option>Mangalyan Avenue, Sulur</option><option>Maharani Town, Pollachi</option><option>Both / Not sure</option></select>
-        <select name="size"><option>Preferred plot size</option><option>1,000 sq.ft</option><option>1,350 sq.ft</option><option>Larger</option></select>
-      </div>
-      <button class="btn btn-cta" type="submit">Request a Call Back →</button>
-      <p class="msg">✓ Thank you! We'll call you shortly.</p>
-      <p class="fine">By submitting, you agree to be contacted by our sales team regarding Mangalyan Avenue or Maharani Town.</p>
-    </form>
+    <div data-form="main"></div>
   </div>
 </div></section>
 </main>
@@ -471,30 +522,115 @@ document.querySelectorAll("[data-wa]").forEach(a=>{a.href=waUrl();a.target="_bla
 /* ---- click tracking ---- */
 document.addEventListener("click",e=>{
   const a=e.target.closest("[data-track]");if(a)track(a.dataset.track);
-  const p=e.target.closest("[data-proj]");if(p){const s=document.getElementById("projSel");if(s)s.value=p.dataset.proj}
+  
 });
 
-/* ---- lead forms ---- */
+
+/* ---- hero aerial layout animation ---- */
+(function(){
+  const svg=document.getElementById("aerial");if(!svg)return;
+  let h='<rect x="0" y="0" width="600" height="420" rx="18" fill="#1d2c3f"/><rect class="road" x="0" y="196" width="600" height="28"/><rect class="road" x="286" y="0" width="28" height="420"/>';
+  const cols=[18,98,178,330,410,490],rows=[18,98,238,318];let i=0;
+  const sold=new Set([2,5,9,12,16,19]),hot=new Set([4,13,21]);
+  rows.forEach(y=>cols.forEach(x=>{
+    const c=sold.has(i)?" sold":hot.has(i)?" hot":"";
+    h+='<rect class="plot'+c+'" x="'+x+'" y="'+y+'" width="68" height="62" rx="5" style="animation-delay:'+(0.2+i*0.09).toFixed(2)+'s"/>';i++;
+  }));
+  h+='<rect class="gate" x="270" y="396" width="60" height="14" rx="3"/>';
+  svg.innerHTML=h;
+})();
+/* hide video if no file is provided */
+const hv=document.querySelector(".hero-vid");
+if(hv){const src=hv.querySelector("source");src.addEventListener("error",()=>hv.remove())}
+
+/* ---- two-step lead forms ---- */
+const FORM=`
+<form class="lead-form" novalidate>
+  <input class="hp" name="company" tabindex="-1" autocomplete="off">
+  <div class="steps"><i class="on"></i><i></i></div>
+  <div class="s1" style="display:grid;gap:11px">
+    <input name="name" placeholder="Your name" required autocomplete="name">
+    <input name="phone" type="tel" inputmode="numeric" placeholder="Mobile number" required autocomplete="tel" maxlength="14">
+    <button class="btn btn-cta" type="submit">Get Price List →</button>
+    <div class="perks"><span>Free site visit</span><span>No spam</span><span>Callback in minutes</span></div>
+  </div>
+  <div class="s2">
+    <p style="font-weight:700;color:var(--navy)">✓ Got it! One more step so we can help better <small style="font-weight:500;color:var(--muted)">(optional)</small></p>
+    <select name="project"><option>Mangalyan Avenue, Sulur</option><option>Maharani Town, Pollachi</option><option>Both / Not sure</option></select>
+    <select name="size"><option value="">Preferred plot size</option><option>1,000 sq.ft</option><option>1,350 sq.ft</option><option>Larger</option></select>
+    <input name="city" placeholder="Your city (optional)" autocomplete="address-level2">
+    <button class="btn btn-wa" type="submit">Send &amp; Chat on WhatsApp</button>
+    <button class="btn" type="button" data-skip style="background:none;color:var(--muted);padding:6px">Skip</button>
+  </div>
+  <div class="done"><b>🎉 Thank you!</b>Our team will call you shortly.</div>
+  <p class="fine">By submitting, you agree to be contacted by our sales team regarding Mangalyan Avenue or Maharani Town.</p>
+</form>`;
+const FORMTITLE={hero:["Get Price List & Free Site Visit","Takes 10 seconds. Our team calls you back."],main:["Book Your Free Site Visit","Free pick-up options available. Ask our team."]};
+document.querySelectorAll("[data-form]").forEach(c=>{
+  const t=FORMTITLE[c.dataset.form];
+  c.innerHTML="<h3>"+t[0]+"</h3><p class=\"sub\">"+t[1]+"</p>"+FORM;
+});
+function confetti(){
+  const cols=["#ff6a1a","#f2b632","#1f9d63","#0f2742","#25d366"];
+  for(let i=0;i<42;i++){const e=document.createElement("i");e.className="confetti";
+    e.style.left=Math.random()*100+"vw";e.style.background=cols[i%5];e.style.animationDelay=Math.random()*.5+"s";e.style.animationDuration=1.4+Math.random()+"s";
+    document.body.appendChild(e);setTimeout(()=>e.remove(),3200)}
+}
+const postLead=async(d)=>{if(CONFIG.leadEndpoint)await fetch(CONFIG.leadEndpoint,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(d)})};
 document.querySelectorAll(".lead-form").forEach(f=>{
+  let base=null;
+  const finish=()=>{f.classList.remove("step2");f.querySelector(".s1").style.display="none";f.querySelector(".s2").style.display="none";f.querySelector(".steps").style.display="none";f.querySelector(".done").style.display="block";confetti()};
+  f.querySelector("[data-skip]").addEventListener("click",finish);
   f.addEventListener("submit",async e=>{
     e.preventDefault();
-    const d=Object.fromEntries(new FormData(f));
-    if(d.company)return; // honeypot
-    const phone=(d.phone||"").replace(/\D/g,"").slice(-10);
-    if(!d.name||!d.name.trim()||!/^[6-9]\d{9}$/.test(phone)){alert("Please enter your name and a valid 10-digit mobile number.");return}
-    d.phone=phone;delete d.company;Object.assign(d,attrib,{page:location.href,ts:new Date().toISOString()});
-    const btn=f.querySelector("button");btn.disabled=true;btn.textContent="Sending…";
-    try{
-      if(CONFIG.leadEndpoint){
-        await fetch(CONFIG.leadEndpoint,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(d)});
-      }else{
-        window.open(waUrl("Hi, I'm "+d.name+". I'm interested in "+d.project+". Please call me on "+phone+"."),"_blank");
-      }
+    const d=Object.fromEntries(new FormData(f));if(d.company)return;
+    if(!base){ // step 1: capture lead immediately
+      const phone=(d.phone||"").replace(/\D/g,"").slice(-10);
+      if(!d.name||!d.name.trim()||!/^[6-9]\d{9}$/.test(phone)){alert("Please enter your name and a valid 10-digit mobile number.");return}
+      base={name:d.name.trim(),phone,...attrib,page:location.href,ts:new Date().toISOString()};
+      try{await postLead({...base,step:1})}catch(err){}
       track("generate_lead",true);
-      f.querySelector(".msg").style.display="block";f.reset();btn.textContent="Submitted ✓";
-    }catch(err){btn.disabled=false;btn.textContent="Request a Call Back →";alert("Something went wrong. Please call +91 89403 75757.")}
+      f.classList.add("step2");f.querySelectorAll(".steps i")[1].classList.add("on");
+      const sel=f.querySelector("[name=project]"),pv=window.__proj;if(pv)sel.value=pv;
+      return;
+    }
+    // step 2: enrich
+    const full={...base,project:d.project,size:d.size,city:d.city,step:2};
+    try{await postLead(full)}catch(err){}
+    window.open(waUrl("Hi, I'm "+base.name+". I'm interested in "+d.project+(d.size?" ("+d.size+")":"")+". Please call me on "+base.phone+"."),"_blank");
+    finish();
   });
 });
+document.addEventListener("click",e=>{const p=e.target.closest("[data-proj]");if(p)window.__proj=p.dataset.proj});
+
+/* ---- price calculator ---- */
+(function(){
+  const P={mangalyan:{n:"Mangalyan Avenue",price:569000,min:1000},maharani:{n:"Maharani Town",price:229000,min:1350}};
+  const $=id=>document.getElementById(id);if(!$("cSize"))return;
+  let proj="mangalyan",months=3;
+  const inr=n=>"₹"+Math.round(n).toLocaleString("en-IN");
+  const lakh=n=>"₹"+(n/1e5).toFixed(2).replace(/\.?0+$/,"")+" L";
+  function calc(){
+    const p=P[proj],size=+$("cSize").value,down=+$("cDown").value;
+    const total=size/435.6*p.price,bal=Math.max(0,total-down);
+    $("cSizeV").textContent=size.toLocaleString("en-IN")+" sq.ft ("+(size/435.6).toFixed(2)+" cents)";
+    $("cDownV").textContent=inr(down);
+    $("cTotal").textContent=lakh(total);
+    $("cDownO").textContent=inr(Math.min(down,total));
+    $("cEmi").textContent=inr(bal/months)+" × "+months;
+    $("cNote").textContent="Indicative at starting price of "+inr(p.price)+"/cent (1 cent = 435.6 sq.ft). Excludes registration and other charges; final price confirmed by our team.";
+    const msg="Hi, I checked the calculator: "+p.n+", "+size+" sq.ft, approx "+lakh(total)+", down payment "+inr(down)+", "+months+"-month EMI. Please share exact price and availability.";
+    $("cCta").href=waUrl(msg);
+  }
+  document.querySelectorAll("#cProj button").forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll("#cProj button").forEach(x=>x.classList.toggle("on",x===b));
+    proj=b.dataset.v;const s=$("cSize");s.min=P[proj].min;if(+s.value<P[proj].min)s.value=P[proj].min;calc();track("calc_project");
+  }));
+  document.querySelectorAll("#cMonths button").forEach(b=>b.addEventListener("click",()=>{
+    document.querySelectorAll("#cMonths button").forEach(x=>x.classList.toggle("on",x===b));months=+b.dataset.v;calc();
+  }));
+  $("cSize").addEventListener("input",calc);$("cDown").addEventListener("input",calc);calc();
+})();
 
 /* ---- scroll reveal ---- */
 const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}}),{threshold:.12});
