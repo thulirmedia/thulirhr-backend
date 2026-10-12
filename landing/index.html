@@ -290,6 +290,28 @@ input[type=range]{padding:0;border:0;accent-color:var(--cta);height:28px;backgro
 .tick-in{animation:none}
 @media(hover:none){.proj::before,.why::before,.amen div::before{display:none}}
 
+
+/* ===== signature scenes ===== */
+.story{padding:0;background:linear-gradient(180deg,#0b1d33,#102a47);color:#fff}
+.story-pin{min-height:100vh;display:flex;align-items:center;padding:90px 0 40px}
+.story-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:40px;align-items:center}
+@media(max-width:860px){.story-grid{grid-template-columns:1fr}.story-text{order:2}#ssvg{order:1;max-height:42vh}.sl span{display:none}.story-cta{display:none}}
+.story h2{color:#fff;margin-bottom:22px}
+.story .eyebrow{color:var(--gold)}
+.sl{list-style:none;display:grid;gap:10px;margin-bottom:22px}
+.sl li{display:flex;gap:14px;align-items:flex-start;padding:12px 14px;border-radius:14px;border:1px solid rgba(255,255,255,.1);opacity:.4;transition:.4s;background:rgba(255,255,255,.03)}
+.sl li b{font-size:.78rem;color:var(--gold);letter-spacing:.1em;padding-top:3px}
+.sl li strong{display:block;font-size:1.02rem}
+.sl li span{font-size:.84rem;color:#b8c8dc}
+.sl li.on{opacity:1;background:rgba(255,106,26,.14);border-color:var(--cta);transform:translateX(8px)}
+#ssvg{width:100%;height:auto;filter:drop-shadow(0 30px 40px rgba(0,0,0,.45));border-radius:16px}
+.bigtext{overflow:hidden;padding:46px 0;background:var(--paper);white-space:nowrap}
+.bt{font:400 clamp(3rem,9vw,7.5rem)/1 "Archivo Black",Manrope,sans-serif;color:transparent;-webkit-text-stroke:2px rgba(15,39,66,.28);width:max-content;will-change:transform}
+.bt.r2{-webkit-text-stroke:2px rgba(255,106,26,.45);margin-top:6px}
+.glow{position:absolute;width:520px;height:520px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,200,90,.22),transparent 65%);left:0;top:0;transform:translate(-50%,-50%);z-index:0}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+
 /* reveal */
 .rv{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}
 .rv.in{opacity:1;transform:none}
@@ -344,6 +366,52 @@ input[type=range]{padding:0;border:0;accent-color:var(--cta);height:28px;backgro
   <div><b>TNRERA</b><small>Compliant projects</small></div>
 </div></div>
 
+<section class="story" id="story">
+  <div class="story-pin">
+    <div class="wrap story-grid">
+      <div class="story-text">
+        <span class="eyebrow">How your layout comes together</span>
+        <h2>From open land to your own plot</h2>
+        <ol class="sl" id="sl">
+          <li><b>01</b><div><strong>Approved layout</strong><span>DTCP approved layouts, TNRERA-compliant projects.</span></div></li>
+          <li><b>02</b><div><strong>Wide tar roads</strong><span>Well-laid tar roads for easy access to every plot.</span></div></li>
+          <li><b>03</b><div><strong>Your plot, marked</strong><span>Villa plots from 1,000 sq.ft in Sulur and 1,350 sq.ft in Pollachi.</span></div></li>
+          <li><b>04</b><div><strong>Gated entrance &amp; park</strong><span>Gated communities with spacious park space.</span></div></li>
+          <li><b>05</b><div><strong>EB &amp; water connection</strong><span>EB connection and Attikadavu water provided.</span></div></li>
+        </ol>
+        <a class="btn btn-cta story-cta" href="#enquire" data-track="story_cta">Book a Free Site Visit →</a>
+      </div>
+      <svg id="ssvg" viewBox="0 0 600 460" role="img" aria-label="Animated layout showing roads, plots, gate, park and utilities">
+        <rect id="sLand" x="20" y="20" width="560" height="420" rx="14" fill="#1b3350"/>
+        <path id="sBound" d="M34 20H566Q580 20 580 34V426Q580 440 566 440H34Q20 440 20 426V34Q20 20 34 20Z" fill="none" stroke="#f2b632" stroke-width="3.5" pathLength="1"/>
+        <g id="sRoads" stroke="#3a4d66" stroke-width="22" stroke-linecap="butt" fill="none">
+          <path d="M20 150H580" pathLength="1"/><path d="M20 300H580" pathLength="1"/><path d="M300 20V440" pathLength="1"/>
+        </g>
+        <g id="sDash" stroke="#cfd9e6" stroke-width="2" stroke-dasharray="8 8" fill="none" opacity=".7">
+          <path d="M20 150H580"/><path d="M20 300H580"/><path d="M300 20V440"/>
+        </g>
+        <g id="sPlots"></g>
+        <g id="sPark">
+          <rect x="322" y="172" width="236" height="116" rx="10" fill="#2a8a4f"/>
+          <g fill="#145c33"><circle cx="350" cy="205" r="13"/><circle cx="395" cy="250" r="15"/><circle cx="450" cy="200" r="12"/><circle cx="505" cy="245" r="14"/><circle cx="535" cy="198" r="11"/><circle cx="440" cy="262" r="10"/></g>
+          <text x="440" y="232" text-anchor="middle" fill="#fff" font-size="15" font-weight="800" font-family="Manrope,sans-serif">PARK</text>
+        </g>
+        <g id="sGate">
+          <rect x="262" y="408" width="14" height="34" rx="3" fill="#fff"/><rect x="324" y="408" width="14" height="34" rx="3" fill="#fff"/>
+          <rect x="262" y="400" width="76" height="12" rx="4" fill="#f2b632"/>
+          <text x="300" y="454" text-anchor="middle" fill="#f2b632" font-size="11" font-weight="800" font-family="Manrope,sans-serif">GATED ENTRANCE</text>
+        </g>
+        <g id="sPins" font-family="Manrope,sans-serif" font-size="22" text-anchor="middle">
+          <g><circle cx="150" cy="150" r="17" fill="#fff"/><text x="150" y="157">💧</text></g>
+          <g><circle cx="450" cy="150" r="17" fill="#fff"/><text x="450" y="157">⚡</text></g>
+          <g><circle cx="150" cy="300" r="17" fill="#fff"/><text x="150" y="307">⚡</text></g>
+          <g><circle cx="450" cy="300" r="17" fill="#fff"/><text x="450" y="307">💧</text></g>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
 <section class="projects" id="projects"><div class="wrap">
   <div class="sec-head rv"><div><span class="eyebrow">Our ongoing projects</span><h2>Two communities.<br>One for every budget.</h2></div>
   <p>Whether you want a premium villa plot in Sulur or an affordable investment in Pollachi, your perfect plot is waiting.</p></div>
@@ -368,6 +436,8 @@ input[type=range]{padding:0;border:0;accent-color:var(--cta);height:28px;backgro
     </article>
   </div>
 </div></section>
+
+<div class="bigtext" aria-hidden="true"><div class="bt r1">SULUR ✦ POLLACHI ✦ VILLA PLOTS ✦ EASY EMI ✦ SULUR ✦ POLLACHI ✦ VILLA PLOTS ✦ EASY EMI ✦</div><div class="bt r2">DTCP APPROVED ✦ GATED COMMUNITY ✦ BANK LOAN HELP ✦ DTCP APPROVED ✦ GATED COMMUNITY ✦ BANK LOAN HELP ✦</div></div>
 
 <section id="why"><div class="wrap">
   <div class="rv"><span class="eyebrow">Why choose us</span><h2>Why Choose Mother India City Shelters?</h2></div>
@@ -515,6 +585,7 @@ input[type=range]{padding:0;border:0;accent-color:var(--cta);height:28px;backgro
 <a class="fab" href="#" data-wa data-track="fab_wa" aria-label="WhatsApp">💬</a>
 <div class="toast" id="toast" role="status"></div>
 
+<script src="vendor/lenis.min.js"></script>
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
 <script>
@@ -824,6 +895,74 @@ const tb=[...document.querySelectorAll("#timer b")];
   if(bar){gsap.set(bar,{yPercent:110});ScrollTrigger.create({trigger:".hero",start:"bottom 60%",onEnter:()=>gsap.to(bar,{yPercent:0,duration:.5,ease:"power3.out"}),onLeaveBack:()=>gsap.to(bar,{yPercent:110,duration:.4})})}
 
   /* refresh once images/map settle */
+  addEventListener("load",()=>ScrollTrigger.refresh());
+})();
+</script>
+
+<script>
+/* ===== signature motion: pinned build scene, smooth scroll, big text, wipes ===== */
+(function(){
+  if(typeof NOGSAP==="undefined"||NOGSAP)return;
+  const fine=matchMedia("(hover:hover) and (pointer:fine)").matches;
+  const $=(q,c)=>[...(c||document).querySelectorAll(q)];
+
+  /* smooth scroll (desktop) */
+  if(fine&&window.Lenis){
+    const lenis=new Lenis({lerp:.09,wheelMultiplier:1});
+    lenis.on("scroll",ScrollTrigger.update);
+    gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);
+    document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener("click",e=>{
+      const id=a.getAttribute("href");if(id.length<2)return;const t=document.querySelector(id);if(!t)return;
+      e.preventDefault();lenis.scrollTo(t,{offset:-62,duration:1.4});
+    }));
+  }
+
+  /* ---- pinned scroll-built layout ---- */
+  const svg=document.getElementById("ssvg");
+  const plotsG=document.getElementById("sPlots");
+  let h="";const blocks=[[34,34,256,104],[310,34,256,104],[34,162,256,126],[34,312,256,114],[310,312,256,114]];
+  blocks.forEach(b=>{const cols=4,rows=b[3]>110?2:2,gx=6,gy=6,w=(b[2]-gx*(cols-1))/cols,hh=(b[3]-gy*(rows-1))/rows;
+    for(let r=0;r<rows;r++)for(let c=0;c<cols;c++)h+='<rect class="pl" x="'+(b[0]+c*(w+gx)).toFixed(1)+'" y="'+(b[1]+r*(hh+gy)).toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+hh.toFixed(1)+'" rx="4" fill="'+(((r+c)%5===0)?"#f2b632":"#3aa86a")+'"/>'});
+  plotsG.innerHTML=h;
+
+  gsap.set("#sBound,#sRoads path",{strokeDasharray:1,strokeDashoffset:1});
+  gsap.set("#sLand",{opacity:0});gsap.set("#sDash",{opacity:0});
+  gsap.set(".pl",{scale:0,opacity:0,transformOrigin:"50% 50%"});
+  gsap.set("#sPark",{opacity:0,y:20});gsap.set("#sGate",{opacity:0,y:30});
+  gsap.set("#sPins g",{scale:0,transformOrigin:"50% 50%"});
+
+  const lis=$("#sl li");
+  const tl=gsap.timeline({defaults:{ease:"power2.inOut"},scrollTrigger:{
+    trigger:".story-pin",start:"top top",end:"+="+Math.round(innerHeight*3.4),pin:true,scrub:.6,anticipatePin:1,
+    onUpdate:self=>{const i=Math.min(4,Math.floor(self.progress*5));lis.forEach((l,k)=>l.classList.toggle("on",k===i))}}});
+  tl.to("#sLand",{opacity:1,duration:.5})
+    .to("#sBound",{strokeDashoffset:0,duration:1})
+    .to("#sRoads path",{strokeDashoffset:0,duration:1,stagger:.25})
+    .to("#sDash",{opacity:.7,duration:.4})
+    .to(".pl",{scale:1,opacity:1,duration:.5,stagger:{each:.025,from:"center"},ease:"back.out(1.8)"})
+    .to("#sPark",{opacity:1,y:0,duration:.6})
+    .to("#sGate",{opacity:1,y:0,duration:.6},"<")
+    .to("#sPins g",{scale:1,duration:.5,stagger:.12,ease:"back.out(3)"})
+    .to("#ssvg",{scale:1.04,duration:.6},"<");
+  lis[0].classList.add("on");
+
+  /* big text driven by scroll */
+  gsap.fromTo(".bt.r1",{xPercent:0},{xPercent:-45,ease:"none",scrollTrigger:{trigger:".bigtext",start:"top bottom",end:"bottom top",scrub:.5}});
+  gsap.fromTo(".bt.r2",{xPercent:-45},{xPercent:0,ease:"none",scrollTrigger:{trigger:".bigtext",start:"top bottom",end:"bottom top",scrub:.5}});
+
+  /* section wipes: dark sections grow from a rounded card to full bleed */
+  $(".pay,.invest").forEach(sec=>gsap.fromTo(sec,{clipPath:"inset(7% 5% 7% 5% round 44px)"},{clipPath:"inset(0% 0% 0% 0% round 0px)",ease:"none",scrollTrigger:{trigger:sec,start:"top bottom",end:"top 25%",scrub:true}}));
+
+  /* hero: rolling price numbers + cursor glow */
+  $(".price-pills .pill b").forEach(b=>{
+    const m=b.textContent.match(/([\d.]+)/);if(!m)return;const v=parseFloat(m[1]),pre=b.textContent.slice(0,m.index),post=b.textContent.slice(m.index+m[1].length),o={n:0};
+    gsap.to(o,{n:v,duration:2,delay:1.2,ease:"power3.out",onUpdate:()=>b.textContent=pre+o.n.toFixed(2)+post});
+  });
+  if(fine){
+    const hero=document.querySelector(".hero"),g=document.createElement("div");g.className="glow";hero.insertBefore(g,hero.firstChild);
+    const gx=gsap.quickTo(g,"x",{duration:.8}),gy=gsap.quickTo(g,"y",{duration:.8});
+    hero.addEventListener("mousemove",e=>{const r=hero.getBoundingClientRect();gx(e.clientX-r.left);gy(e.clientY-r.top)});
+  }
   addEventListener("load",()=>ScrollTrigger.refresh());
 })();
 </script>
